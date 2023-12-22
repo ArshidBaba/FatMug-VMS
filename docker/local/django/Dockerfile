@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.10.2-slim-bullseye
+ARG PYTHON_VERSION=3.9-slim-bullseye
 
 FROM python:${PYTHON_VERSION} as python
 
@@ -7,7 +7,7 @@ ARG BUILD_ENVIRONMENT=local
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     build-essential \
-    libq-dev
+    libpq-dev
 
 COPY ./requirements .
 
@@ -27,11 +27,17 @@ ENV BUILD_ENV ${BUILD_ENVIRONMENT}
 
 WORKDIR ${APP_HOME}
 
+# RUN apt-get update && apt-get install --no-install-recommends -y \
+#     libq-dev \
+#     gettext \
+#     && apt-get purge -y --auto-remove -o
+#     APT::AutoRemove::RecommendsImportant=false
+#     && rm -rf /var/lib/apt/lists/*
+
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    libq-dev \
+    libpq-dev \
     gettext \
-    && apt-get purge -y --auto-remove -o
-    APT::AutoRemove::RecommendsImportant=false
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=python-build-stage /usr/src/app/wheels /wheels/
