@@ -41,7 +41,7 @@ THIRD_PARTY_APPS = [
     "djcelery_email",
 ]
 
-LOCAL_APPS = ["core_apps.vendors", "core_apps.users"]
+LOCAL_APPS = ["core_apps.users"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
