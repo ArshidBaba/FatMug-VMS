@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+watchmedo auto-restart -d fatmug/ -p '*.py' -- celery -A fatmug worker --loglevel=info
